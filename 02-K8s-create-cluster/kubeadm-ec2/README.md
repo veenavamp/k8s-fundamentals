@@ -77,6 +77,27 @@ sudo systemctl restart docker
 
 kubeadm init --pod-network-cidr=192.168.0.0/16
 
+# To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+# Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+```
+### Join the woker nodes to the created cluster
+
+```
+# This below join command will be disabled once you initialize the cluster
+
+## example 
+
+kubeadm join 10.0.101.50:6443 --token u4br39.6eucsm3t4l7icyno \
+	--discovery-token-ca-cert-hash sha256:e428c0209b827dd3dc984e3714c72a31293b7b4d6bb328c2445ea7311fee4341 
+
 ```
 
 ### install the CNI driver
