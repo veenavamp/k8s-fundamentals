@@ -48,17 +48,7 @@ terraform apply
 
 ## intialize the Cluster manually by login into both master and worker nodes
 
-### Cgroup Settings
-
-```
-
-# ref https://v1-22.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/configure-cgroup-driver/
-
-kind: KubeletConfiguration
-apiVersion: kubelet.config.k8s.io/v1beta1
-cgroupDriver: systemd
-
-```
+### Cgroup Settings on both nodes
 
 
 ```
@@ -84,11 +74,56 @@ sudo systemctl restart docker
 ```
 # enter the pod network ( optional ) to assign cidr for pod network
 
-sudo kubeadm init --config kubeadm-config.yml
 
 kubeadm init --pod-network-cidr=192.168.0.0/16
 
 ```
+
+### install the CNI driver
+
+```
+# installing calico driver
+
+curl https://docs.projectcalico.org/manifests/calico.yaml -O
+
+kubectl apply -f calico.yaml
+
+```
+
+### Validate the Nodes and Pods
+
+```
+
+# Make sure the nodes are ready if not waiting for the CNI driver to be up and running
+
+
+kubectl get nodes 
+
+
+# check for calico CNI status
+
+kubectl get pods -n kube-system
+
+# example
+
+root@ip-10-0-101-50:~# kubectl get pods -n kube-system
+NAME                                       READY   STATUS    RESTARTS   AGE
+calico-kube-controllers-65898446b5-gcdr4   1/1     Running   0          7m22s
+calico-node-bts84                          1/1     Running   0          7m22s
+calico-node-v8g8x                          1/1     Running   0          5m58s
+coredns-78fcd69978-b6k98                   1/1     Running   0          109m
+coredns-78fcd69978-fgx8r                   1/1     Running   0          109m
+etcd-ip-10-0-101-50                        1/1     Running   0          109m
+kube-apiserver-ip-10-0-101-50              1/1     Running   0          109m
+kube-controller-manager-ip-10-0-101-50     1/1     Running   0          109m
+kube-proxy-dnkhp                           1/1     Running   0          5m58s
+kube-proxy-r6m7m                           1/1     Running   0          109m
+kube-scheduler-ip-10-0-101-50              1/1     Running   0          109m
+
+```
+
+
+
 
 
 
