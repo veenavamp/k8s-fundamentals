@@ -31,3 +31,16 @@ managedNodeGroups:          # Type of node
 ### More example 
 
 https://github.com/weaveworks/eksctl/tree/main/examples
+
+
+## Access cluster using kubectl 
+
+# create kubeconfig 
+
+```
+
+export KUBECONFIG=/<PATH>
+
+aws eks update-kubeconfig --region region-code --name cluster-name
+
+```

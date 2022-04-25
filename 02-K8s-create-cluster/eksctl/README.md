@@ -29,3 +29,15 @@ cd ${DIRECTORY}
 eksctl create cluster -f ***.yml
 
 ```
+
+## Access cluster using kubectl 
+
+# create kubeconfig 
+
+```
+
+export KUBECONFIG=/<PATH>
+
+aws eks update-kubeconfig --region region-code --name cluster-name
+
+```
