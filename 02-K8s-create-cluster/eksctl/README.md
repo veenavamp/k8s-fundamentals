@@ -26,6 +26,6 @@ eksctl version
 ```
 cd ${DIRECTORY}
 
-eksctl apply -f ***.yml
+eksctl create cluster -f ***.yml
 
 ```

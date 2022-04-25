@@ -4,7 +4,7 @@
 
 cd  00-simple-cluster
 
-eksctl apply -f cluster.yaml
+eksctl create cluster -f cluster.yaml
 
 ```
 
