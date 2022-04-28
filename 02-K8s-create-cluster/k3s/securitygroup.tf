@@ -24,7 +24,7 @@ resource "aws_security_group" "k3s-sec-grp" {
     protocol = "udp"
     from_port = 8472
     to_port = 8472
-    security_groups = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
     protocol = "tcp"
