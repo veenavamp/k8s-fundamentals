@@ -14,7 +14,6 @@ resource "aws_security_group" "k3s-sec-grp" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   ingress {
     protocol = "tcp"
     from_port = 30000
@@ -27,7 +26,6 @@ resource "aws_security_group" "k3s-sec-grp" {
     to_port = 8472
     security_groups = ["0.0.0.0/0"]
   }
-
   ingress {
     protocol = "tcp"
     from_port = 6443
@@ -38,19 +36,19 @@ resource "aws_security_group" "k3s-sec-grp" {
     protocol = "tcp"
     from_port = 2380
     to_port = 2380
-    security_groups = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
     protocol = "tcp"
     from_port = 2379
     to_port = 2379
-    security_groups = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
     protocol = "tcp"
     from_port = 10250
     to_port = 10252
-    security_groups = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
     Name = "allow-ssh"
