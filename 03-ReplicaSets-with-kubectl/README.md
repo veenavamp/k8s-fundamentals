@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: my-helloworld-app
-        image: thedevopsstore/kube-helloworld:1.0.0
+        image: hello-world
 ```
 
 ### List ReplicaSets

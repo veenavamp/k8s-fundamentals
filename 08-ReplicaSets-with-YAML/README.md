@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: myapp2
-        image: thedevopsstore/kubenginx:2.0.0
+        image: nginx
         ports:
           - containerPort: 80
 ```

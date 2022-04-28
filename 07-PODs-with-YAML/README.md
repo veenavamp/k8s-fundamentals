@@ -24,7 +24,7 @@ metadata: # Dictionary
 spec:
   containers: # List
     - name: myapp
-      image: thedevopsstore/kubenginx:1.0.0
+      image: nginx
       ports:
         - containerPort: 80
 ```
