@@ -14,7 +14,7 @@
 ```
 # Create Deployment
 kubectl create deployment <Deplyment-Name> --image=<Container-Image>
-kubectl create deployment my-first-deployment --image=thedevopsstore/kubenginx:1.0.0 
+kubectl create deployment my-first-deployment --image=nginx 
 
 # Verify Deployment
 kubectl get deployments
