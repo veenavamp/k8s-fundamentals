@@ -24,7 +24,7 @@ spec:
         image: redis
         command:
           - redis-server
-          - "redis/redis.conf"
+          - "/redis/redis.conf"
         resources:
           requests:
             cpu: 100m
@@ -33,11 +33,11 @@ spec:
         - containerPort: 6379
         volumeMounts:
         - name: redis-config
-          mountPath: /redis/redis.conf
-    volumes:
-    - name: redis-config
-      configMap:
-        name: redis-configmap
+          mountPath: /redis
+      volumes:
+      - name: redis-config
+        configMap:
+          name: redis-configmap
 ---        
 apiVersion: v1
 kind: Service        # Type of Kubernetes resource
