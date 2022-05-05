@@ -1,0 +1,63 @@
+# Source: wordpress/charts/memcached/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-portal-memcached
+  namespace: default
+  labels:
+    app.kubernetes.io/name: memcached
+    helm.sh/chart: memcached-6.0.7
+    app.kubernetes.io/instance: dev-portal
+    app.kubernetes.io/managed-by: Helm
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: memcached
+      app.kubernetes.io/instance: dev-portal
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: memcached
+        helm.sh/chart: memcached-6.0.7
+        app.kubernetes.io/instance: dev-portal
+        app.kubernetes.io/managed-by: Helm
+      annotations:
+    spec:
+      containers:
+        - name: memcached
+          image: docker.io/bitnami/memcached:1.6.14-debian-10-r34
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+          ports:
+            - name: memcache
+              containerPort: 11211
+          livenessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            tcpSocket:
+              port: memcache
+          readinessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+            tcpSocket:
+              port: memcache
+          resources:
+            limits: {}
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}

@@ -1,0 +1,23 @@
+# Source: wordpress/charts/memcached/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-portal-memcached
+  namespace: default
+  labels:
+    app.kubernetes.io/name: memcached
+    helm.sh/chart: memcached-6.0.7
+    app.kubernetes.io/instance: dev-portal
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+spec:
+  type: ClusterIP
+  sessionAffinity: None
+  ports:
+    - name: memcache
+      port: 11211
+      targetPort: memcache
+      nodePort: null
+  selector:
+    app.kubernetes.io/name: memcached
+    app.kubernetes.io/instance: dev-portal

@@ -1,0 +1,34 @@
+# Source: wordpress/templates/postinit-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dev-portal-wordpress-postinit
+  namespace: "default"
+  labels:
+    app.kubernetes.io/name: wordpress
+    helm.sh/chart: wordpress-13.1.4
+    app.kubernetes.io/instance: dev-portal
+    app.kubernetes.io/managed-by: Helm
+data:
+  00-configure-w3-total-cache.sh: |-
+    #!/bin/bash
+
+    # Add permissions to edit wp-config.php
+    chmod +w /bitnami/wordpress/wp-config.php
+
+    # Activate W3 Total Cache pairs
+    wp plugin activate w3-total-cache
+    wp total-cache fix_environment
+
+    # Choose 'Memcached' as database and object cache method
+    wp total-cache option set dbcache.engine memcached --type=string
+    wp total-cache option set objectcache.engine memcached --type=string
+    wp total-cache flush all
+    wp total-cache option set dbcache.memcached.servers dev-portal-memcached.default.svc.cluster.local:11211 --type=string
+    wp total-cache option set dbcache.enabled true --type=boolean
+    wp total-cache option set objectcache.memcached.servers dev-portal-memcached.default.svc.cluster.local:11211 --type=string
+    wp total-cache option set objectcache.enabled true --type=boolean
+    wp total-cache flush all
+
+    # Revoke permissions to edit wp-config.php
+    chmod a-w bitnami/wordpress/wp-config.php
