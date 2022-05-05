@@ -3,12 +3,10 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: dev-wordpress
-  namespace: "default"
+  namespace: "hr"
   labels:
     app.kubernetes.io/name: wordpress
-    helm.sh/chart: wordpress-13.1.4
     app.kubernetes.io/instance: dev-wordpress
-    app.kubernetes.io/managed-by: Helm
 spec:
   accessModes:
     - "ReadWriteOnce"
